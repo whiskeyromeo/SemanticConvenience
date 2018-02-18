@@ -33,8 +33,16 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.get('/', (req, res) => {
     console.log('getting the index');
-    res.render('pages/index.ejs');
+    res.render('pages/index.ejs',{ partialList });
     //res.status(200).send({message: 'Successful return from reviews'})
+});
+
+app.get('/partials', (req, res) => {
+    partialList.then((partials) => {
+        res.json(partials);
+    }).catch((err) => {
+        res.send(err, {message : "Could not get the partialList"});
+    });
 });
 
 app.get('/reviews', (req, res) => {

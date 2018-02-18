@@ -18,7 +18,7 @@ function getPartials(basePath) {
     }).then((partialDirs) => {
         // console.log(partialDirs);
         return Promise.all(partialDirs.map(requestPartials)).then((res) => {
-            // console.log(res);
+            console.log(res);
             return res;
         })
     });
@@ -31,7 +31,7 @@ function getPartials(basePath) {
  */
 function requestPartials(dir) {
     return new Promise(function(resolve, reject) {
-        fs.readdir((basePath + dir), (err, files) => {
+        fs.readdir((PARTIALS_PATH + dir), (err, files) => {
             resolve({dir, files});
         })
     }).then((res) => {

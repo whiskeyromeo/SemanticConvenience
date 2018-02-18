@@ -6,9 +6,24 @@
 </head>
 
 <body>
-    
+    <script>
+        $(document).ready(function() {
+            
+            $.get('/partials', function(data) {
+                const partials = data;
+                for (i in partials) {
+                    // TODO:
+                    // Pass the data into the pagination
+                    // module so that it can be used to swap out the components
+                    console.log(partials[i]);
+                }
+            });
+        });
+
+    </script>
+
     <% include ../partials/menus/pointing-menu %>
-    
+
     <% include ../partials/pagination/simple-pagination %> 
 
     <% include ../partials/bodies/simple-segment %>
