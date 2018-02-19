@@ -1,28 +1,32 @@
-const editorialLink = document.querySelector(".editorial-link");
-const reviewLink = document.querySelector(".review-link");
-const upcomingEventLink = document.querySelector(".upcoming-event-link");
-const archiveEventLink = document.querySelector(".event-archive-link");
+var editorialLink = document.querySelector(".editorial-link");
+var reviewLink = document.querySelector(".review-link");
+var upcomingEventLink = document.querySelector(".upcoming-event-link");
+var archiveEventLink = document.querySelector(".event-archive-link");
 
 
 editorialLink.addEventListener('click', (e) => {
-    get('/');
+    e.preventDefault();
+    alert('clicked on the editorial Link')
 });
 
 reviewLink.addEventListener('click', (e) => {
-    get('/reviews');
+    e.preventDefault();
+    alert('clicked on the review link')
 });
 
-reviewLink.addEventListener('click', (e) => {
-    get('/events/upcoming');
+upcomingEventLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('clicked on the upcoming event link')
 });
 
-reviewLink.addEventListener('click', (e) => {
-    get('/events/archive');
+archiveEventLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('clicked on the archived events link')
 });
 
 
 function get(path, data) {
-    return window.fetch(path,  {
+    return fetch(path,  {
         method: 'GET',
         headers: {
             'Accept': 'application/json',

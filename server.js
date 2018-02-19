@@ -1,3 +1,5 @@
+const cluster = require('cluster');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -24,17 +26,21 @@ if (process.env.NODE_ENV !== 'production') {
             Object.keys(require.cache).forEach(function (id) {
                 if (/[\/\\]app[\/\\]/.test(id)) delete require.cache[id]
             })
-        })
-    })
+        });
+    });
+
 }
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 
-app.get('/', (req, res) => {
-    console.log('getting the index');
-    res.render('pages/index.ejs',{ partialList });
-    //res.status(200).send({message: 'Successful return from reviews'})
+app.get('/partials/:dir/:file', function(req, res) {
+    res.render(`partials/${req.params.dir}/${req.params.file}`, {layout: false});
+});
+
+app.get('/', async (req, res) => {
+    const partials = await partialList;
+    res.render('pages/index.ejs', { data: JSON.stringify({partials, message: 'Successful return from index' })});
 });
 
 app.get('/partials', (req, res) => {
@@ -48,7 +54,7 @@ app.get('/partials', (req, res) => {
 app.get('/reviews', (req, res) => {
     console.log('getting the reviews');
     res.render('pages/index');
-    //res.status(200).send({message: 'Successful return from reviews'})
+    res.status(200).send({message: 'Successful return from reviews'})
 });
 
 app.get('/events/upcoming', (req, res) => {
