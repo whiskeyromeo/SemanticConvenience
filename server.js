@@ -43,17 +43,9 @@ app.get('/', async (req, res) => {
     res.render('pages/index.ejs', { data: JSON.stringify({partials, message: 'Successful return from index' })});
 });
 
-app.get('/partials', (req, res) => {
-    partialList.then((partials) => {
-        res.json(partials);
-    }).catch((err) => {
-        res.send(err, {message : "Could not get the partialList"});
-    });
-});
 
 app.get('/reviews', (req, res) => {
-    console.log('getting the reviews');
-    res.render('pages/index');
+    
     res.status(200).send({message: 'Successful return from reviews'})
 });
 
