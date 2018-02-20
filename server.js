@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'public/views'));
 
-const partialList = require('./partial-manager');
+const partialList = require('./partial-manager').walkSync;
 console.log('partialList: ', partialList);
 
 // ---- Hot-Reloading Script as nodemon is Broken --------
