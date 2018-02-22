@@ -1,7 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const PARTIALS_PATH = './public/views/partials/';
-const VIEW_TAG = '.ejs'
+const config = require('./.config.js');
+
+const PARTIALS_PATH = config.PARTIALS_PATH;
+const VIEW_TAG = config.VIEW_TAG;
+const ROOT_TAG = config.ROOT_TAG;
 
 /**
  * Recursive, synchronous solution to retrieving the files for viewing.
@@ -14,7 +17,6 @@ function walkSync(dir, fileList=[]) {
         if(fs.statSync(dir + '/' + file).isDirectory()) {
             var local = [];
             var local = walkSync(dir + '/' + file);
-            console.log(`dir: ${file}, files:`, local);
             fileList.push({dir: file, files: local});
         } else {
             if(path.extname(file).toLowerCase() === VIEW_TAG) {
@@ -23,6 +25,31 @@ function walkSync(dir, fileList=[]) {
         }
     });
     return fileList;
+}
+
+
+/**
+ * Recursive, synchronous solution to retrieving the files for viewing.
+ */
+function walkSyncObject(dir) {
+    var fs = fs || require('fs');
+    var files = fs.readdirSync(dir);
+    fileList = [];
+    files.forEach(function(file) {
+        if(fs.statSync(dir + '/' + file).isDirectory()) {
+            var local = walkSync(dir + '/' + file);
+            // console.log(`dir: ${file}, files:`, local);
+            fileList.push({dir: file, files: local});
+        } else {
+            if(path.extname(file).toLowerCase() === VIEW_TAG) {
+                fileList.push(file);
+            }
+        }
+    });
+    if(dir === PARTIALS_PATH) {
+        dir = ROOT_TAG;
+    }
+    return {dir:dir, files:fileList};
 }
 
 
@@ -42,7 +69,6 @@ function getPartials(basePath) {
     }).then((partialDirs) => {
         // console.log(partialDirs);
         return Promise.all(partialDirs.map(requestPartials)).then((res) => {
-            console.log(res);
             return res;
         })
     });
@@ -65,7 +91,8 @@ function requestPartials(dir) {
 
 module.exports = {
     getPartials : getPartials(PARTIALS_PATH),
-    walkSync : walkSync(PARTIALS_PATH)
+    walkSync : walkSync(PARTIALS_PATH),
+    walkSyncObject : walkSyncObject(PARTIALS_PATH)
 }
 
 // module.exports = getPartials(PARTIALS_PATH);

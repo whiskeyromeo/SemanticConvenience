@@ -7,13 +7,17 @@ const moment = require('moment')
 const store = require('./store');
 const app = express();
 
+const fileManager = require('./fileManager');
+
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'public/views'));
 
-const partialList = require('./partial-manager').walkSync;
-console.log('partialList: ', partialList);
+const partialList = require('./partial-manager').walkSyncObject;
+// console.log('partialList: ', partialList);
+
+const partialListObject = require('./partial-manager').walkSyncObject;
 
 // ---- Hot-Reloading Script as nodemon is Broken --------
 if (process.env.NODE_ENV !== 'production') {
@@ -33,9 +37,8 @@ if (process.env.NODE_ENV !== 'production') {
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-
-app.get('/partials/:dir/:file', function(req, res) {
-    res.render(`partials/${req.params.dir}/${req.params.file}`, {layout: false});
+app.get('/partials/*?', function(req, res) {
+    res.render(`partials/${req.params[0]}`, {layout: false});
 });
 
 app.get('/', async (req, res) => {
@@ -43,10 +46,22 @@ app.get('/', async (req, res) => {
     res.render('pages/index.ejs', { data: JSON.stringify({partials, message: 'Successful return from index' })});
 });
 
+app.post('/createFile', (req, res) => {
+    console.log('createFile Hit: ', req.body);
+    res.send(req.body);
+    fileManager.appendFile(req.body);
+});
+
+app.post('/createDirectory', (req, res) => {
+    console.log('createDirectory Hit: ', req.body);
+    res.send(req.body);
+    fileManager.createDirectory(req.body);
+});
+
+
 
 app.get('/reviews', (req, res) => {
-    
-    res.status(200).send({message: 'Successful return from reviews'})
+    res.render('pages/review.ejs', { message: 'Successful return from reviews' });
 });
 
 app.get('/events/upcoming', (req, res) => {
@@ -55,6 +70,10 @@ app.get('/events/upcoming', (req, res) => {
 
 app.get('/events/archive', (req, res) => {
     res.status(200).send({message: 'Successful return'})
+});
+
+app.get('*', (req, res) => {
+    res.status(404).send('WAT?');
 });
 
 

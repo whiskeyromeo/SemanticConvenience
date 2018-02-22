@@ -2,21 +2,23 @@
 <html lang="en">
 
 <head>
-    <% include ../partials/head %>
+    <% include ../resources/head %>
 
     <link rel="stylesheet" href="css/index.css">
+    <script src="scripts/validate.js"></script>
     <script id="main-js" src="scripts/main.js" ejs-data='<%= data %>'></script>
 </head>
 
 <body>
-    <% include ../partials/menus/pointing-menu %>
+    <% include ../resources/indexMenu %>
+    <div id="message"></div>
     <div class="body-container">
         
         <div id="app" class="ui fluid list">
         </div>
 
     </div>
-    <% include ../partials/footer %>
+    <% include ../resources/footer %>
 </body>
 
 </html>
