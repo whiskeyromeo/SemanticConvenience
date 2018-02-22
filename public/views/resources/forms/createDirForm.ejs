@@ -1,0 +1,22 @@
+
+<div class="ui segment">
+    <h2>Create A New Directory</h2>
+
+    <form class="ui form" id="createDirForm">
+        <div class="field">
+            <label>Directory Name</label>
+            <input type="text" name="dirname" placeholder="Desired File Name">
+        </div>
+        <button class="ui button" id="createDirSubmit" type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    const dirFormObject = {
+            formId: 'createDirForm',
+            inputNames: ['dirname'],
+            path: '/system/createDirectory',
+            validators: [{ dirname: /^[a-zA-Zа-яА-Я0-9_\-]+$/ }]
+        }
+    onFormSubmit(dirFormObject);
+</script>

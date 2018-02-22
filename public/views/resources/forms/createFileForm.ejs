@@ -1,0 +1,26 @@
+
+<div class="ui segment">
+    <h2>Create A New File</h2>
+
+    <form class="ui form" id="createFileForm">
+        <div class="field">
+            <label>FileName</label>
+            <input type="text" name="filename" placeholder="Desired File Name">
+        </div>
+        <div class="field">
+            <label>Text</label>
+            <textarea name="content" placeholder="Whatever you want in your File"></textarea>
+        </div>
+        <button class="ui button" id="createFileSubmit" type="submit">Submit</button>
+    </form>
+</div>
+
+<script>
+    const fileFormObject = {
+        formId: 'createFileForm',
+        inputNames: ['filename', 'content'],
+        path: '/system/createFile',
+        validators: [{filename : /^[a-zA-Zа-яА-Я0-9_\-]+$/}]
+    }
+    onFormSubmit(fileFormObject);
+</script>

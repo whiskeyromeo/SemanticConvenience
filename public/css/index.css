@@ -1,0 +1,23 @@
+.body-container {
+    padding: 10px;
+}
+
+body {
+    background: whitesmoke;
+}
+div.ui.text.menu, div.ui.segment {
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
+
+.list>.item, .list>.item>.content {   
+    width: 100% !important;
+}
+
+i.circular.code.outline.icon.right.floated {
+    z-index: 10;
+    position: relative;
+    top: 8px;
+    right: 8px;
+    background: aliceblue;
+}

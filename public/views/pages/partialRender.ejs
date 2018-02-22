@@ -1,0 +1,15 @@
+<% partials.forEach(function(partial) { %>
+    <h2>
+        <%= partial.dir %>
+    </h2>
+    <ul>
+        <%   partial.files.forEach(function(file) { %>
+            <li>
+                <h3>
+                    <%= file %>
+                </h3>
+                <%- include(`../partials/${partial.dir}/${file}`) %>
+            </li>
+            <%  }) %>
+    </ul>
+    <% }) %>
