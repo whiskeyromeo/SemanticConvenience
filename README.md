@@ -23,3 +23,9 @@ furthermore the updates to the file directory only happen at load time. Will nee
 
 I am planning on removing whatever elements I am not actively using from semantic out of the primary application and making it into more of a universal solution so that bootstrap/material/d3 components can be included with minimal conflict. 
 
+This has evolved into a bit of a solution for file upload/rendering in the browser. I am currently working on getting the functionality down in order to have this be deployed to AWS EC2 with the file system being linked to an S3 instance. In this case it will be easier to access the data remotely, and hopefully by the time the full functionality is up I will have the kinks worked out.
+
+Next steps are better validation of the folders and filesystem in order to ensure there will be no overwrites of existing files. This will need to be ported to a service, the S3 interface will need to be a service as well so that the port can happen remotely. Also need to add in the ability to have multiple view engines running as currently the partials being rendered are all .ejs types.
+
+
+
